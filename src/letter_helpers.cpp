@@ -21,7 +21,6 @@ std::string letter_helpes::incr_string(std::string s) {
 char letter_helpes::incr_char(char ch) {
   if ('z' == ch) {
     return 'a';
-  } else {
-    return ch + 1;
   }
+  return ++ch;
 }

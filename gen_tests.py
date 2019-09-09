@@ -6,11 +6,17 @@ import string
 import sys
 
 class Tests:
+    def test_ordinary_test(self):
+        return "[1-5] {1 2 3 4 5}\n[a-d] {a b c d}"
+
+    def answer_ordinary_test(self):
+        return "1a1b1c1d2a2b2c2d3a3b3c3d4a4b4c4d5a5b5c5d"
+
     def test_empty_arrays(self):
         return "[0-0] {}" + '\n' + "[0-0] {}"
 
     def answer_empty_arrays(self):
-        return ""
+        return "Validation Error: [0-0] {}"
 
     def test_empty_alphabet(self):
         return "[1-1] {0 0}"

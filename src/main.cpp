@@ -4,8 +4,20 @@
 #include <istream>
 #include <variant>
 
+#include <assert.h>
+
 #include "combinator.h"
 #include "data_input_output.h"
+
+// Using this function it`s possible to check, that nuber of Letters is lower
+// that some limit
+size_t lengthOfOutput(const std::vector<LettersVector> &v) {
+  size_t res = v[0].size();
+  for (size_t i = 1; i < v.size(); ++i) {
+    res *= v[i].size();
+  }
+  return res * v.size();
+}
 
 int main(int argc, char *argv[]) {
   std::istream *inp;
@@ -53,7 +65,7 @@ int main(int argc, char *argv[]) {
   auto solver = CombinationsGenerato();
   auto combinations = solver.combine(parsed_input);
 
-  for (auto el : combinations) {
+  for (const auto &el : combinations) {
     if (el.pimpl->ind == Letter_impl::LONG)
       *out << std::get<0>(el.pimpl->data);
     else if (el.pimpl->ind == Letter_impl::CHAR)
@@ -62,7 +74,8 @@ int main(int argc, char *argv[]) {
       *out << std::get<2>(el.pimpl->data);
   }
 
-  *out << std::endl;
+  assert(combinations.size() == lengthOfOutput(parsed_input));
 
+  *out << std::endl;
   return 0;
 }

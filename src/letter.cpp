@@ -12,13 +12,16 @@ Letter createLetter(std::string_view s) {
     p->data = digit;
     p->ind = Letter_impl::LONG;
     return Letter(p);
-  } else if (is_char(s)) {
+  }
+
+  if (is_char(s)) {
     char ch = s[0];
     p->data = ch;
     p->ind = Letter_impl::CHAR;
     return Letter(p);
   }
 
+  // if have no type for this token, save it as string
   p->data = s.data();
   p->ind = Letter_impl::STRING;
   return Letter(p);
@@ -31,6 +34,7 @@ Letter nextLetter(const Letter &letter) {
 }
 
 Letter::implPointer_t nextLetter_impl(const Letter::implPointer_t p) {
+  // Its better to pass p by value than by reference
   using namespace letter_helpes;
   auto res = std::make_shared<Letter_impl>();
   res->ind = p->ind;

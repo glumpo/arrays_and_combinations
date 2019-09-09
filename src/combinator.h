@@ -35,7 +35,7 @@ class CombinationsGenerato {
     }
 
     if (combine_impl(st + 1, cur + 1, ed + 1, stop)) {
-      if (true == failed) {
+      if (failed) {
         return false;
       }
 
@@ -65,7 +65,7 @@ class CombinationsGenerato {
    */
   LettersVector combine(std::vector<LettersVector>& v) {
     for (auto& el : v) {
-      if (el.size() == 0) {
+      if (el.empty()) {
         continue;
       }
       starts_.push_back(el.begin());
@@ -73,17 +73,13 @@ class CombinationsGenerato {
       ends_.push_back(el.end());
     }
 
-    long i = 0;
-    while (size_t(i) < (v[0].size() - 1)) {
-      if (true == failed) {
+    while (!combine_impl(starts_.begin(), curs_.begin(), ends_.begin(),
+                         starts_.end())) {
+      if (failed) {
         break;
       }
-      if (starts_.begin() + i == starts_.end()) {
+      if (starts_.begin() == starts_.end()) {
         break;
-      }
-      if (combine_impl(starts_.begin() + i, curs_.begin() + i,
-                       ends_.begin() + i, starts_.end())) {
-        ++i;
       }
     }
     return res_;

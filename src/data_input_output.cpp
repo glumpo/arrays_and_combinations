@@ -14,7 +14,7 @@
  */
 LettersVector string_to_vec(std::string_view s, std::string_view delim = " ") {
   LettersVector v;
-  if (s.size() == 0) {
+  if (s.empty()) {
     return v;
   }
   size_t start = 0U;
@@ -69,6 +69,10 @@ std::vector<LettersVector> get_validated_input(std::istream &inp) {
     }
     std::string letters;
     std::getline(inp, letters, '}');
+    if (letters.empty()) {
+      throw std::domain_error("Validation Error: [" + alphabet + "] {" +
+                              letters + "}");
+    }
 
     // transforms "a-b" to [a, b]
     auto alphabet_vec = string_to_vec(alphabet, "-");
@@ -104,7 +108,7 @@ bool is_valid(Letter first, Letter last, const LettersVector &letters_vec) {
     alphabet.insert(i);
   }
 
-  for (auto el : letters_vec) {
+  for (const auto &el : letters_vec) {
     if (alphabet.find(el) == alphabet.end()) {
       return false;
     }

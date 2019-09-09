@@ -15,39 +15,38 @@ struct Letter_impl {
   int ind;
 };
 
+/*
+ * Class Letter implemments pimpl idiom, so when storring a number of same
+ * letters you will store only pointers on them. May be it has  sence to go
+ * deeper and create complet Flyweight pattern with permanent centralized store
+ *
+ * It is better to pass Letter by value than by reference
+ * becouz of size (long * 2) and other things
+ */
 class Letter {
-  // DEGUB
-  // private:
  public:
+  // May be its better to make pointer private
   using implPointer_t = std::shared_ptr<Letter_impl>;
   implPointer_t pimpl;
 
  public:
-  Letter(Letter_impl *p) { pimpl.reset(p); }
-  Letter(implPointer_t p) { pimpl = p; }
+  Letter(Letter_impl *p) noexcept { pimpl.reset(p); }
+  Letter(implPointer_t p) noexcept { pimpl = std::move(p); }
 
-  Letter &operator=(const Letter &other) {
-    this->pimpl = other.pimpl;
-    return *this;
-  }
+  Letter &operator=(const Letter &other) noexcept = default;
+  Letter &operator=(Letter &&other) noexcept = default;
 
-  Letter &operator=(Letter &&other) {
-    this->pimpl = std::move(other.pimpl);
-    return *this;
-  }
-
-  Letter(const Letter &other) { this->pimpl = other.pimpl; }
-
-  Letter(Letter &&other) { this->pimpl = std::move(other.pimpl); }
+  Letter(const Letter &other) noexcept = default;
+  Letter(Letter &&other) noexcept = default;
 
   ~Letter() = default;
 
  public:
-  bool operator<(const Letter &other) const {
+  bool operator<(const Letter &other) const noexcept {
     return this->pimpl->data < other.pimpl->data;
   }
 
-  bool operator<=(const Letter &other) const {
+  bool operator<=(const Letter &other) const noexcept {
     return this->pimpl->data <= other.pimpl->data;
   }
 };
