@@ -65,6 +65,9 @@ class CombinationsGenerato {
                        starts.end())) {
         ++i;
       }
+      if (starts.begin() + i == starts.end()) {
+        break;
+      }
     }
     return _res;
   }

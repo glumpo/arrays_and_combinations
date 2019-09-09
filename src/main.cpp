@@ -61,6 +61,7 @@ int main(int argc, char *argv[]) {
     else if (el.pimpl->ind == Letter_impl::STRING)
       *out << std::get<2>(el.pimpl->data);
   }
+
   *out << std::endl;
 
   return 0;
