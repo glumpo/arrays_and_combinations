@@ -1,5 +1,8 @@
 #include "letter.h"
 
+/*
+ * Allocate new Letter_impl, checks what type is input data and return Letter
+ */
 Letter createLetter(std::string_view s) {
   using namespace letter_helpes;
   auto p = std::make_shared<Letter_impl>();

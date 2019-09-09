@@ -8,6 +8,10 @@
 
 #include "data_input_output.h"
 
+/*
+ * Splits string to Letter with givven delimmiter (defaults to " ")
+ * return vector of Letters
+ */
 LettersVector string_to_vec(std::string_view s, std::string_view delim = " ") {
   LettersVector v;
   if (s.size() == 0) {
@@ -27,6 +31,11 @@ LettersVector string_to_vec(std::string_view s, std::string_view delim = " ") {
   return v;
 }
 
+/*
+ * DOESNT SKIP \n!!!
+ * Skip all spaces and \t
+ * return first valid char
+ */
 int first_non_space(std::istream &inp) {
   int ch;
   do {
@@ -35,6 +44,10 @@ int first_non_space(std::istream &inp) {
   return ch;
 }
 
+/*
+ * Reads input from istream and cheks, if input valid.
+ * Throws: std::domain_error, std::bad_aloc from vector
+ */
 std::vector<LettersVector> get_validated_input(std::istream &inp) {
   std::vector<LettersVector> res;
   while (!inp.eof()) {
@@ -57,10 +70,12 @@ std::vector<LettersVector> get_validated_input(std::istream &inp) {
     std::string letters;
     std::getline(inp, letters, '}');
 
+    // transforms "a-b" to [a, b]
     auto alphabet_vec = string_to_vec(alphabet, "-");
     auto letters_vec = string_to_vec(letters);
 
     if (alphabet_vec.size() != 2) {
+      // if alphabet not in form of "a-b:
       throw std::domain_error("Incorect input");
     }
 
@@ -78,6 +93,11 @@ std::vector<LettersVector> get_validated_input(std::istream &inp) {
   return res;
 }
 
+/*
+ * Checks, if LettersVector are valid for given first and last letters of
+ * alphabet. Generetes alphabet ti the set and checks, if every letter in
+ * LetterVector is in alphabet set
+ */
 bool is_valid(Letter first, Letter last, const LettersVector &letters_vec) {
   std::set<Letter> alphabet;
   for (auto i = first; i <= last; i = nextLetter(i)) {
