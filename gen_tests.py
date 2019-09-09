@@ -6,12 +6,6 @@ import string
 import sys
 
 class Tests:
-    def test_empty_file(self):
-        return ""
-
-    def answer_empty_file(self):
-        return ""
-
     def test_empty_arrays(self):
         return "[0-0] {}" + '\n' + "[0-0] {}"
 
@@ -22,7 +16,7 @@ class Tests:
         return "[1-1] {0 0}"
 
     def answer_empty_alphabet(self):
-        return "Validation Error [1-1] {0 0}"
+        return "Validation Error: [1-1] {0 0}"
 
     def test_incorrect_input(self):
         return "lol, I am a test case"

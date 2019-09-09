@@ -10,6 +10,9 @@
 
 LettersVector string_to_vec(std::string_view s, std::string_view delim = " ") {
   LettersVector v;
+  if (s.size() == 0) {
+    return v;
+  }
   size_t start = 0U;
   size_t end = s.find(delim);
   while (end != std::string::npos) {
