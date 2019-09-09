@@ -13,28 +13,34 @@ class Tests:
         return ""
 
     def test_empty_arrays(self):
-        return "[] {}" + '\n' + "[] {}"
+        return "[0-0] {}" + '\n' + "[0-0] {}"
 
     def answer_empty_arrays(self):
         return ""
 
     def test_empty_alphabet(self):
-        return "[] {0 0}"
+        return "[1-1] {0 0}"
 
     def answer_empty_alphabet(self):
-        return "Validation Error [] {0 0}"
+        return "Validation Error [1-1] {0 0}"
 
     def test_incorrect_input(self):
         return "lol, I am a test case"
 
     def answer_incorrect_input(self):
-        return "Parsing Error"
+        return "Incorect input"
 
     def test_two_letters(self):
         return "[a-b] {a b}"
 
-    def test_one_correct(self):
-        return "abba"
+    def answer_two_letters(self):
+        return "ab"
+
+    def test_two_ints(self):
+        return "[1-2] {1 2}"
+
+    def answer_two_ints(self):
+        return "12"
 
 def test_to_answer(test):
     return "answer" + test[len("test"):]
@@ -51,7 +57,7 @@ if __name__ == "__main__":
 
         test_output_filename = "tests/{}.t".format(method_name_base)
         with open(test_output_filename, "w") as output:
-            output.write(gen_test() + "\n")
+            output.write(gen_test() + "\n" + '\n')
 
         answer_output_filename = "tests/{}.a".format(method_name_base)
         with open(answer_output_filename, "w") as output:
