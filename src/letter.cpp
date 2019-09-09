@@ -9,9 +9,11 @@ Letter createLetter(std::string_view s) {
     p->data = digit;
     p->ind = Letter_impl::LONG;
     return Letter(p);
-  } else {
-    // TODO: impliment other cases
-    throw "TODO";
+  } else if (is_char(s)) {
+    char ch = s[0];
+    p->data = ch;
+    p->ind = Letter_impl::CHAR;
+    return Letter(p);
   }
 
   p->data = s.data();
@@ -26,14 +28,16 @@ Letter nextLetter(const Letter &letter) {
 }
 
 Letter::implPointer_t nextLetter_impl(const Letter::implPointer_t p) {
+  using namespace letter_helpes;
   auto res = std::make_shared<Letter_impl>();
   res->ind = p->ind;
 
   if (Letter_impl::LONG == p->ind) {
     res->data = std::get<Letter_impl::LONG>(p->data) + 1;
+  } else if (Letter_impl::CHAR == p->ind) {
+    res->data = incr_char(std::get<Letter_impl::CHAR>(p->data));
   } else {
-    // TODO: impliment
-    throw "IMPLIMENT";
+    res->data = incr_string(std::get<Letter_impl::STRING>(p->data));
   }
 
   return res;

@@ -10,7 +10,8 @@
 
 struct Letter_impl {
   enum { LONG, CHAR, STRING };
-  std::variant<long, char, std::string> data;
+  using data_t = std::variant<long, char, std::string>;
+  data_t data;
   int ind;
 };
 
