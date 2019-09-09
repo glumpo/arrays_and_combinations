@@ -51,6 +51,9 @@ class CombinationsGenerato {
  public:
   LettersVector combine(std::vector<LettersVector>& v) {
     for (auto& el : v) {
+      if (el.size() == 0) {
+        continue;
+      }
       starts.push_back(el.begin());
       curs.push_back(el.begin());
       ends.push_back(el.end());
@@ -61,12 +64,12 @@ class CombinationsGenerato {
       if (true == failed) {
         break;
       }
+      if (starts.begin() + i == starts.end()) {
+        break;
+      }
       if (combine_impl(starts.begin() + i, curs.begin() + i, ends.begin() + i,
                        starts.end())) {
         ++i;
-      }
-      if (starts.begin() + i == starts.end()) {
-        break;
       }
     }
     return _res;
